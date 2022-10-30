@@ -1,0 +1,22 @@
+[package]
+name = 'httpie'
+version = '0.1.0'
+edition = '2021'
+
+[dependencies]
+anyhow = '1'
+colored = '2'
+jsonxf = '1.1'
+mime = '0.3'
+
+[dependencies.clap]
+version = '4'
+features = ['derive']
+
+[dependencies.reqwest]
+version = '0.11'
+features = ['json']
+
+[dependencies.tokio]
+version = '1'
+features = ['full']

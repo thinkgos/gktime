@@ -1,0 +1,28 @@
+[package]
+name = 'kv'
+version = '0.1.0'
+edition = '2021'
+
+[dependencies]
+bytes = '1'
+prost = '0.11'
+tracing = '0.1'
+
+[build-dependencies]
+prost-build = '0.11'
+
+[dev-dependencies]
+anyhow = '1.0.66'
+async-prost = '0.4.0'
+futures = '0.3.25'
+tracing-subscriber = '0.3'
+
+[dev-dependencies.tokio]
+version = '1.21'
+features = [
+    'rt',
+    'rt-multi-thread',
+    'io-util',
+    'macros',
+    'net',
+]

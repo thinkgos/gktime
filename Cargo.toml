@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    'httpie',
+    'kv',
+    'rgrep',
+]
