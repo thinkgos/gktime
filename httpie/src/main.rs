@@ -5,7 +5,7 @@ use clap::{Parser, Subcommand};
 
 /// A naive httpie implementation with Rust, can you imagine how easy it is?
 #[derive(Parser, Debug)]
-#[clap(version = "1.0", author = "Tyr Chen <tyr@chen.com>")]
+#[clap(version, author)]
 struct Opts {
     #[clap(subcommand)]
     pub subcmd: SubCommand,
