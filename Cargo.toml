@@ -3,6 +3,7 @@ members = [
     'htmltomd',
     'httpie',
     'kv',
+    'queryer',
     'rgrep',
     'show',
     'thumbor',
