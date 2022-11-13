@@ -1,6 +1,6 @@
 use crate::DataSet;
 use anyhow::Result;
-use polars::prelude::*;
+use polars::{export::arrow::array::clone, prelude::*};
 use std::io::Cursor;
 
 pub trait Load {

@@ -1,3 +1,5 @@
+use std::clone;
+
 use anyhow::{anyhow, Result};
 use polars::prelude::*;
 use sqlparser::ast::{
@@ -45,9 +47,10 @@ impl<'a> TryFrom<&'a Statement> for Sql<'a> {
 
                     group_by: _,
                     ..
-                } = match &q.body {
-                    SetExpr::Select(statement) => statement.as_ref(),
-                    _ => return Err(anyhow!("We only support Select Query at the moment")),
+                } = if let SetExpr::Select(statement) = &*q.body {
+                    statement.as_ref()
+                } else {
+                    return Err(anyhow!("We only support Select Query at the moment"));
                 };
 
                 let source = Source(table_with_joins).try_into()?;
@@ -135,6 +138,7 @@ impl<'a> TryFrom<Projection<'a>> for Expr {
     type Error = anyhow::Error;
 
     fn try_from(p: Projection<'a>) -> Result<Self, Self::Error> {
+        let a = Arc::new(1);
         match p.0 {
             SelectItem::UnnamedExpr(SqlExpr::Identifier(id)) => Ok(col(&id.to_string())),
             SelectItem::ExprWithAlias {
@@ -144,6 +148,7 @@ impl<'a> TryFrom<Projection<'a>> for Expr {
                 Box::new(Expr::Column(Arc::new(id.to_string()))),
                 Arc::new(alias.to_string()),
             )),
+
             SelectItem::QualifiedWildcard(v) => Ok(col(&v.to_string())),
             SelectItem::Wildcard => Ok(col("*")),
             item => Err(anyhow!("projection {} not supported", item)),
